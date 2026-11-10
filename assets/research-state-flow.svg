@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="940" viewBox="0 0 1120 940" role="img" aria-labelledby="title description">
+  <title id="title">Parallel research: execution flow and state updates</title>
+  <desc id="description">An initial state containing topic fans out to two research nodes. Each reads the same topic and returns a separate field, benefits or limitations. LangGraph merges both updates and waits for both nodes before synthesis. Synthesis reads the merged state and adds report to produce the final state.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#526479"/></marker>
+    <style>
+      text {font-family: Arial, Helvetica, sans-serif; fill: #182b42;}
+      .heading {font-size: 26px; font-weight: 700;}
+      .label {font-size: 19px; font-weight: 700;}
+      .body {font-size: 17px;}
+      .code {font-family: Menlo, Consolas, monospace; font-size: 17px;}
+      .muted {fill: #53657b; font-size: 16px;}
+      .flow {fill: none; stroke: #526479; stroke-width: 2.5; marker-end: url(#arrow);}
+    </style>
+  </defs>
+  <rect width="1120" height="940" rx="20" fill="#f7f9fc"/>
+  <text x="40" y="48" class="heading">Parallel research: flow + shared state</text>
+  <text x="40" y="78" class="muted">Nodes read state snapshots and return partial updates. LangGraph merges the updates.</text>
+
+  <rect x="350" y="105" width="420" height="88" rx="12" fill="#eef2ff" stroke="#929ed7"/>
+  <text x="374" y="136" class="label">START · initial state</text>
+  <text x="374" y="166" class="code">{topic: "your research topic"}</text>
+
+  <path d="M560 193V222H290V258" class="flow"/>
+  <path d="M560 193V222H830V258" class="flow"/>
+  <text x="430" y="246" class="muted">fan out · same step</text>
+
+  <rect x="70" y="260" width="440" height="140" rx="12" fill="#e7f5f2" stroke="#56a998"/>
+  <text x="94" y="295" class="label">research_benefits</text>
+  <text x="94" y="325" class="body">Reads: topic</text>
+  <text x="94" y="352" class="body">Tavily search → OpenAI summary</text>
+  <text x="94" y="381" class="code">Returns: {benefits: "…"}</text>
+
+  <rect x="610" y="260" width="440" height="140" rx="12" fill="#fff2df" stroke="#d7a35a"/>
+  <text x="634" y="295" class="label">research_limitations</text>
+  <text x="634" y="325" class="body">Reads: topic</text>
+  <text x="634" y="352" class="body">Tavily search → OpenAI summary</text>
+  <text x="634" y="381" class="code">Returns: {limitations: "…"}</text>
+
+  <path d="M290 400V435H445V476" class="flow"/>
+  <path d="M830 400V435H675V476" class="flow"/>
+  <text x="397" y="425" class="muted">join · wait for both branches</text>
+
+  <rect x="290" y="478" width="540" height="114" rx="12" fill="#eef2ff" stroke="#929ed7"/>
+  <text x="314" y="510" class="label">Merged state before synthesis</text>
+  <text x="314" y="540" class="code">{topic: "…",</text>
+  <text x="314" y="568" class="code"> benefits: "…", limitations: "…"}</text>
+  <text x="66" y="522" class="muted">Separate keys:</text>
+  <text x="66" y="548" class="muted">no reducer needed</text>
+
+  <path d="M560 592V627" class="flow"/>
+  <rect x="290" y="630" width="540" height="112" rx="12" fill="#e8effa" stroke="#7298c6"/>
+  <text x="314" y="662" class="label">synthesize</text>
+  <text x="314" y="691" class="body">Reads: topic, benefits, limitations</text>
+  <text x="314" y="720" class="code">OpenAI → Returns: {report: "…"}</text>
+
+  <path d="M560 742V777" class="flow"/>
+  <rect x="290" y="780" width="540" height="114" rx="12" fill="#eef2ff" stroke="#929ed7"/>
+  <text x="314" y="812" class="label">END · final state</text>
+  <text x="314" y="842" class="code">{topic: "…", benefits: "…",</text>
+  <text x="314" y="870" class="code"> limitations: "…", report: "…"}</text>
+  <text x="40" y="924" class="muted">State snapshots are conceptual; the join is an edge, not an extra node.</text>
+</svg>

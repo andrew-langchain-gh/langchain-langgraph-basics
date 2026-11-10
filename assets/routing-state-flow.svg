@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1120" viewBox="0 0 1120 1120" role="img" aria-labelledby="title description">
+<title id="title">Routing: one decision, one handler</title>
+<desc id="description">Initial state has request. An OpenAI structured classifier returns decision. A conditional edge reads decision and executes exactly one of web_research, summarize, or clarify. The chosen handler adds output. Final state retains request and decision plus output. There is no parallel join.</desc>
+<defs>
+ <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#526479"/></marker>
+ <style>
+ text{font-family:Arial,Helvetica,sans-serif;fill:#182b42}.heading{font-size:26px;font-weight:700}.label{font-size:20px;font-weight:700}.body{font-size:17px}.code{font-family:Menlo,Consolas,monospace;font-size:17px}.muted{fill:#53657b;font-size:16px}.flow{fill:none;stroke:#526479;stroke-width:2.5;marker-end:url(#arrow)}
+ </style>
+</defs>
+<rect width="1120" height="1120" rx="20" fill="#f7f9fc"/>
+<text x="40" y="48" class="heading">Routing: one decision, one handler</text>
+<text x="40" y="79" class="muted">The model chooses a label. LangGraph follows the corresponding conditional edge.</text>
+
+<rect x="310" y="110" width="500" height="86" rx="12" fill="#eef2ff" stroke="#929ed7"/>
+<text x="334" y="143" class="label">START · initial state</text>
+<text x="334" y="174" class="code">{request: "…"}</text>
+<path d="M560 196V229" class="flow"/>
+
+<rect x="310" y="232" width="500" height="135" rx="12" fill="#e8effa" stroke="#7298c6"/>
+<text x="334" y="266" class="label">classify_request</text>
+<text x="334" y="296" class="body">Reads: request → OpenAI structured output</text>
+<text x="334" y="326" class="code">Returns: {decision: route}</text>
+<text x="334" y="352" class="muted">Allowed: web_research / summarize / clarify</text>
+<path d="M560 367V400" class="flow"/>
+
+<rect x="310" y="403" width="500" height="97" rx="12" fill="#eef2ff" stroke="#929ed7"/>
+<text x="334" y="437" class="label">State after classification</text>
+<text x="334" y="471" class="code">{request: "…", decision: route}</text>
+<text x="590" y="525" class="muted">route_by_decision reads decision</text>
+<text x="590" y="548" class="muted">Ordinary Python · no LLM call</text>
+<path d="M560 500V563H190V616" class="flow"/>
+<path d="M560 500V616" class="flow"/>
+<path d="M560 500V563H930V616" class="flow"/>
+
+
+
+
+<rect x="30" y="620" width="320" height="194" rx="12" fill="#e7f5f2" stroke="#56a998"/>
+<text x="52" y="656" class="label">web_research</text>
+<text x="52" y="689" class="body">Reads: request</text>
+<text x="52" y="721" class="body">Existing LangChain agent</text>
+<text x="52" y="751" class="body">Tavily search + OpenAI</text>
+<text x="52" y="790" class="code">Returns: {output: "…"}</text>
+
+<rect x="400" y="620" width="320" height="194" rx="12" fill="#fff2df" stroke="#d7a35a"/>
+<text x="422" y="656" class="label">summarize</text>
+<text x="422" y="689" class="body">Reads: request</text>
+<text x="422" y="721" class="body">OpenAI summarizes supplied text</text>
+<text x="422" y="751" class="body">No web search</text>
+<text x="422" y="790" class="code">Returns: {output: "…"}</text>
+
+<rect x="770" y="620" width="320" height="194" rx="12" fill="#f0eafa" stroke="#ad91cb"/>
+<text x="792" y="656" class="label">clarify</text>
+<text x="792" y="689" class="body">Reads: request</text>
+<text x="792" y="721" class="body">OpenAI asks one follow-up</text>
+<text x="792" y="751" class="body">No web search</text>
+<text x="792" y="790" class="code">Returns: {output: "…"}</text>
+
+<path d="M190 814V870H450V960" class="flow"/>
+<path d="M560 814V960" class="flow"/>
+<path d="M930 814V870H670V960" class="flow"/>
+<text x="40" y="917" class="muted">Only one branch runs; no join.</text>
+<text x="40" y="942" class="muted">Only one writer to output.</text>
+
+<rect x="310" y="964" width="500" height="108" rx="12" fill="#eef2ff" stroke="#929ed7"/>
+<text x="334" y="997" class="label">END · final state</text>
+<text x="334" y="1027" class="code">{request: "…", decision: route,</text>
+<text x="334" y="1055" class="code"> output: "…"}</text>
+<text x="40" y="1102" class="muted">Nodes return partial updates; the original request and decision remain in state.</text>
+</svg>

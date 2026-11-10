@@ -1,0 +1,11 @@
+.env
+.env.*
+*.pem
+*.key
+*.crt
+credentials.json
+.venv/
+node_modules/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
