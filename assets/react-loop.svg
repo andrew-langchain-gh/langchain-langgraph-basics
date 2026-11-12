@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700" role="img" aria-labelledby="title description">
+  <title id="title">The ReAct agent loop</title>
+  <desc id="description">A user question goes to the model. The model chooses a tool or a final answer. If it requests a tool, the runtime executes it and adds the result to message state. The model observes the result and decides again. If no tool is requested, it returns the final answer.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#526479"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#182b42}
+      .title{font-size:30px;font-weight:700}.label{font-size:26px;font-weight:700}.body{font-size:20px}.note{font-size:18px;fill:#53657b}
+      .arrow{fill:none;stroke:#526479;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1120" height="700" rx="20" fill="#f7f9fc"/>
+  <text x="40" y="52" class="title">The ReAct loop</text>
+
+  <rect x="160" y="90" width="280" height="72" rx="14" fill="#eef2ff" stroke="#929ed7"/>
+  <text x="300" y="135" text-anchor="middle" class="label">User question</text>
+  <path d="M300 162V218" class="arrow"/>
+
+  <rect x="160" y="225" width="280" height="105" rx="14" fill="#e8effa" stroke="#7298c6"/>
+  <text x="300" y="267" text-anchor="middle" class="label">Reason</text>
+  <text x="300" y="302" text-anchor="middle" class="body">Choose a tool or answer</text>
+
+  <path d="M440 278H673" class="arrow"/>
+  <text x="560" y="258" text-anchor="middle" class="note">Tool requested</text>
+
+  <rect x="680" y="225" width="280" height="105" rx="14" fill="#e7f5f2" stroke="#56a998"/>
+  <text x="820" y="267" text-anchor="middle" class="label">Act</text>
+  <text x="820" y="302" text-anchor="middle" class="body">Execute the tool</text>
+
+  <path d="M820 330V428" class="arrow"/>
+  <text x="842" y="385" class="note">Tool result</text>
+
+  <rect x="680" y="435" width="280" height="105" rx="14" fill="#fff2df" stroke="#d7a35a"/>
+  <text x="820" y="477" text-anchor="middle" class="label">Observe</text>
+  <text x="820" y="512" text-anchor="middle" class="body">Add result to messages</text>
+
+  <path d="M820 540V605H70V278H153" class="arrow"/>
+  <text x="450" y="590" text-anchor="middle" class="note">Updated messages → model decides again</text>
+
+  <path d="M300 330V428" class="arrow"/>
+  <text x="323" y="385" class="note">No tool requested</text>
+
+  <rect x="160" y="435" width="280" height="105" rx="14" fill="#eef2ff" stroke="#929ed7"/>
+  <text x="300" y="477" text-anchor="middle" class="label">Final answer</text>
+  <text x="300" y="512" text-anchor="middle" class="body">Return to the user</text>
+
+  <text x="40" y="665" class="note">State = messages: question → tool request → tool result → answer</text>
+</svg>
