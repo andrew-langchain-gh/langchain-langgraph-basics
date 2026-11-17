@@ -1,0 +1,22 @@
+[project]
+name = "langchain-langgraph-basics"
+version = "0.1.0"
+description = "Travel planner examples with LangChain, LangGraph, and MCP."
+requires-python = ">=3.13"
+dependencies = [
+    "langchain>=1.4.9,<2",
+    "langchain-core>=1.7.6,<2",
+    "langchain-mcp-adapters>=0.3.2,<0.4",
+    "langchain-openai>=1.7.4,<2",
+    "langgraph>=1.2.20,<2",
+    "langsmith>=0.14.17,<1",
+    "pydantic>=2.14.3,<3",
+    "python-dotenv>=1.2.4,<2",
+    "tavily-python>=0.8.5,<0.9",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0,<8",
+    "ipython>=9.18.1,<10",
+]
